@@ -1,20 +1,15 @@
 import { FC } from 'react';
-import cn from 'classnames';
 
 import { Person } from '../../types';
-import { Link } from 'react-router-dom';
+import { PersonLink } from '../PersonLink/PersonLink';
 
 interface Props {
-  parent: Person;
+  parent: Person | undefined;
+  parentName: string | null;
 }
 
-export const PersonParent: FC<Props> = ({ parent }) => (
-  <Link
-    to={`/people/${parent.slug}`}
-    className={cn('', {
-      'has-text-danger': parent.sex === 'f',
-    })}
-  >
-    {parent.name}
-  </Link>
-);
+export const PersonParent: FC<Props> = ({ parent, parentName }) => {
+  const name = parentName ? parentName : '-';
+
+  return <>{parent ? <PersonLink person={parent} /> : name}</>;
+};

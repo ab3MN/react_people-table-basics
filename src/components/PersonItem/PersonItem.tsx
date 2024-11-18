@@ -1,36 +1,20 @@
 import { FC, useContext } from 'react';
 import cn from 'classnames';
-import { Link } from 'react-router-dom';
 
 import { Person } from '../../types';
 import { PersonParent } from '../PersonParent/PersonParent';
 import { PeopleContext } from '../../context/PeopleContext';
+import { PersonLink } from '../PersonLink/PersonLink';
 
 interface Props {
   person: Person;
 }
 
 export const PersonItem: FC<Props> = ({ person }) => {
-  const {
-    slug,
-    name,
-    sex,
-    born,
-    died,
-    motherName,
-    fatherName,
-    mother,
-    father,
-  } = person;
+  const { slug, sex, born, died, motherName, fatherName, mother, father } =
+    person;
 
   const { personId } = useContext(PeopleContext);
-
-  const personMother = motherName ? motherName : '-';
-  const personFather = fatherName ? fatherName : '-';
-
-  const MotherView = mother ? <PersonParent parent={mother} /> : personMother;
-
-  const FatherView = father ? <PersonParent parent={father} /> : personFather;
 
   return (
     <tr
@@ -38,22 +22,17 @@ export const PersonItem: FC<Props> = ({ person }) => {
       className={cn({ 'has-background-warning': personId === slug })}
     >
       <td>
-        <Link
-          to={`/people/${slug}`}
-          className={cn('', {
-            'has-text-danger': sex === 'f',
-          })}
-        >
-          {name}
-        </Link>
+        <PersonLink person={person} />
       </td>
       <td>{sex}</td>
       <td>{born}</td>
       <td>{died}</td>
-      <td>{MotherView}</td>
-      <td>{FatherView}</td>
+      <td>
+        <PersonParent parent={mother} parentName={motherName} />
+      </td>
+      <td>
+        <PersonParent parent={father} parentName={fatherName} />
+      </td>
     </tr>
   );
 };
-
-// className="has-background-warning"
