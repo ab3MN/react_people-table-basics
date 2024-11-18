@@ -1,15 +1,14 @@
 import { HashRouter, Navigate } from 'react-router-dom';
 import { Routes, Route } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
 import { App } from './App';
+import { Routing } from './Routing/Routing';
 
-const HomePage = lazy(() => import('./pages/HomePage/HomePage'));
-const PeoplePage = lazy(() => import('./pages/PeoplePage/PeoplePage'));
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage/NotFoundPage'));
+const { HomePage, PeoplePage, NotFoundPage } = Routing;
 
 export const Root = () => (
   <HashRouter>
-    <Suspense>
+    <Suspense fallback={<div>Loading...</div>}>
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<HomePage />} />

@@ -1,14 +1,9 @@
 import { Loader } from '../Loader';
 import { ErrorNotification } from '../../shared/ErrorNotification';
-import { PersonItem } from '../PersonItem/PersonItem';
 import { usePeople } from '../../hooks/usePeople';
-import { FC } from 'react';
+import { PeopleTable } from '../PeopleTable/PeopleTable';
 
-interface Props {
-  personId: string | undefined;
-}
-
-export const People: FC<Props> = ({ personId }) => {
+export const People = () => {
   const { people, isLoading, error } = usePeople();
 
   const isPeopleEmpthy = !people.length && !isLoading;
@@ -25,33 +20,7 @@ export const People: FC<Props> = ({ personId }) => {
     }
 
     if (!!people.length) {
-      return (
-        <table
-          data-cy="peopleTable"
-          className="table is-striped is-hoverable is-narrow is-fullwidth"
-        >
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Sex</th>
-              <th>Born</th>
-              <th>Died</th>
-              <th>Mother</th>
-              <th>Father</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {people.map(person => (
-              <PersonItem
-                key={person.slug}
-                person={person}
-                personId={personId}
-              />
-            ))}
-          </tbody>
-        </table>
-      );
+      return <PeopleTable people={people} />;
     }
 
     return null;

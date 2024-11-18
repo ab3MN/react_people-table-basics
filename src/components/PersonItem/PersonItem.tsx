@@ -1,16 +1,16 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
 
 import { Person } from '../../types';
 import { PersonParent } from '../PersonParent/PersonParent';
+import { PeopleContext } from '../../context/PeopleContext';
 
 interface Props {
   person: Person;
-  personId: string | undefined;
 }
 
-export const PersonItem: FC<Props> = ({ person, personId }) => {
+export const PersonItem: FC<Props> = ({ person }) => {
   const {
     slug,
     name,
@@ -22,6 +22,8 @@ export const PersonItem: FC<Props> = ({ person, personId }) => {
     mother,
     father,
   } = person;
+
+  const { personId } = useContext(PeopleContext);
 
   const personMother = motherName ? motherName : '-';
   const personFather = fatherName ? fatherName : '-';
